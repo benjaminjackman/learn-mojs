@@ -1,0 +1,19 @@
+
+#RUN WITH:
+webpack-dev-server --inline --content-base static/
+#goto:
+
+http://localhost:8080/
+
+
+# see this to setup webpack
+
+https://webpack.js.org/get-started/
+
+# actually used more of this:
+http://webpack.github.io/docs/webpack-dev-server.html
+
+#then follow vimeo here
+https://vimeo.com/185587462
+
+
