@@ -4,7 +4,7 @@ import MojsPlayer from 'mojs-player';
 import MojsCurveEditor from 'mojs-curve-editor'
 
 
-// var shape = new mojs.Shape({
+// var shapex = new mojs.Shape({
 //   shape:        'circle',  // shape "circle" is default
 //   radius:       25,        // shape radius
 //   fill:         'white',   // same as 'transparent'
@@ -12,7 +12,6 @@ import MojsCurveEditor from 'mojs-curve-editor'
 //   strokeWidth:  5,         // width of the stroke
 //   isShowStart:  true,      // show before any animation starts
 // });
-
 
 // var shape = new mojs.Shape({
 //   shape:        'circle',  // shape "circle" is default
@@ -28,8 +27,8 @@ import MojsCurveEditor from 'mojs-curve-editor'
 //   isShowStart:  true,      // show before any animation starts
 // }).play();
 
-const yCurve = new MojsCurveEditor({name: 'yOffset'})
-const scaleCurve = new MojsCurveEditor({name: 'scaleCurve'})
+const yCurve = new MojsCurveEditor({name: 'yOffset'});
+const scaleCurve = new MojsCurveEditor({name: 'scaleCurve'});
 
 const shape = new mojs.Shape({
   shape:        'circle',
@@ -39,12 +38,72 @@ const shape = new mojs.Shape({
   scaleY: {1:1, curve: scaleCurve.getEasing({
     transform: (k) => 1 / k
   })},
-  duration:      1000,
+  isShowStart: true,
+  duration:      2000,
   // delay:         1000,
   easing:        'cubic.out',
-})
+});
 
-new MojsPlayer({add: shape});
+//
+// const shape2 = new mojs.Shape({
+//   shape:        'circle',
+//   radius:        40,
+//   y: {[-300]:-300, curve: yCurve.getEasing()},
+//   scaleX: {1:1, curve: scaleCurve.getEasing()},
+//   scaleY: {1:1, curve: scaleCurve.getEasing({
+//     transform: (k) => 1 / k
+//   })},
+//   isShowStart: true,
+//   duration:      1000,
+//   // delay:         1000,
+//   easing:        'cubic.out',
+// });
+
+const eye = x => new mojs.Shape({
+  shape:        'circle',
+  radius:        10,
+  y: {[-300]:-300, curve: yCurve.getEasing({
+    transform: k => k + 0.05
+  })},
+  x: x,
+  isShowStart: true,
+  fill: 'black',
+  // y: {[-300]:-300, curve: yCurve.getEasing()},
+  scaleX: {1:1, curve: scaleCurve.getEasing()},
+  scaleY: {1:1, curve: scaleCurve.getEasing({
+    transform: (k) => 1 / k
+  })},
+   duration:      2000,
+  // delay:         1000,
+  //  easing:        'cubic.out',
+});
+
+const leye = eye(-20);
+const reye = eye(20);
+
+const mouth = new mojs.Shape({
+  shape:        'circle',
+  radius:        10,
+  y: {[-280]:-280, curve: yCurve.getEasing()},
+  x: 0,
+  isShowStart: true,
+  fill: 'white',
+  stroke: 'red',
+  // y: {[-300]:-300, curve: yCurve.getEasing()},
+  scaleX: {2:2, curve: scaleCurve.getEasing()},
+  scaleY: {0.5:0.5, curve: scaleCurve.getEasing({
+    transform: (k) => 1 / k
+  })},
+   duration:      2000,
+  // delay:         1000,
+  //  easing:        'cubic.out',
+});
+
+
+const timeline = new mojs.Timeline();
+timeline.add(shape, leye, reye, mouth);
+
+new MojsPlayer({add: timeline});
 
 
 // new mojs.Html();
