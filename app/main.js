@@ -27,23 +27,6 @@ import MojsCurveEditor from 'mojs-curve-editor'
 //   isShowStart:  true,      // show before any animation starts
 // }).play();
 
-const yCurve = new MojsCurveEditor({name: 'yOffset'});
-const scaleCurve = new MojsCurveEditor({name: 'scaleCurve'});
-
-const shape = new mojs.Shape({
-  shape:        'circle',
-  radius:        40,
-  y: {[-300]:-300, curve: yCurve.getEasing()},
-  scaleX: {1:1, curve: scaleCurve.getEasing()},
-  scaleY: {1:1, curve: scaleCurve.getEasing({
-    transform: (k) => 1 / k
-  })},
-  isShowStart: true,
-  duration:      2000,
-  // delay:         1000,
-  easing:        'cubic.out',
-});
-
 //
 // const shape2 = new mojs.Shape({
 //   shape:        'circle',
@@ -58,6 +41,23 @@ const shape = new mojs.Shape({
 //   // delay:         1000,
 //   easing:        'cubic.out',
 // });
+
+const yCurve = new MojsCurveEditor({name: 'yOffset'});
+const scaleCurve = new MojsCurveEditor({name: 'scaleCurve'});
+
+const head = new mojs.Shape({
+  shape:        'circle',
+  radius:        40,
+  y: {[-300]:-300, curve: yCurve.getEasing()},
+  scaleX: {1:1, curve: scaleCurve.getEasing()},
+  scaleY: {1:1, curve: scaleCurve.getEasing({
+    transform: (k) => 1 / k
+  })},
+  isShowStart: true,
+  duration:      2000,
+  // delay:         1000,
+});
+
 
 const eye = x => new mojs.Shape({
   shape:        'circle',
@@ -89,19 +89,16 @@ const mouth = new mojs.Shape({
   isShowStart: true,
   fill: 'white',
   stroke: 'red',
-  // y: {[-300]:-300, curve: yCurve.getEasing()},
   scaleX: {2:2, curve: scaleCurve.getEasing()},
   scaleY: {0.5:0.5, curve: scaleCurve.getEasing({
     transform: (k) => 1 / k
   })},
    duration:      2000,
-  // delay:         1000,
-  //  easing:        'cubic.out',
 });
 
 
 const timeline = new mojs.Timeline();
-timeline.add(shape, leye, reye, mouth);
+timeline.add(head, leye, reye, mouth);
 
 new MojsPlayer({add: timeline});
 
